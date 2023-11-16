@@ -9,7 +9,8 @@ on:
       - "*"
 
 jobs:
-  "Unit test":
+  Unit-test:
+    name: Unit Test
     runs-on: ubuntu-latest
 
     steps:
@@ -34,8 +35,9 @@ jobs:
           python -m pytest -v quote_disp/tests/
           python -m pytest -v quote_gen/tests
         shell: bash
-
-  "Integration Test":
+        
+  Integration-test:
+    name: Integration Test
     runs-on: ubuntu-latest
 
     steps:

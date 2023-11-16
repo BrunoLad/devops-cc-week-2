@@ -1,5 +1,5 @@
 import pytest
-from app import app
+from quote_gen.app import app
 
 @pytest.fixture()
 def setup():

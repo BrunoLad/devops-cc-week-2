@@ -1,0 +1,57 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  "Unit test":
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo code
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+          #ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.x"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install -r quote_disp/requirements.txt
+          python -m pip install -r quote_gen/requirements.txt
+
+      - name: Run unit tests
+        run: |
+          python -m pytest -v quote_disp/tests/
+          python -m pytest -v quote_gen/tests
+        shell: bash
+
+  "Integration Test":
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo code
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.x"
+      
+      - name: Install dependencies
+        run: python -m pip install -r e2e/requirements.txt
+      
+      - name: Run integration test
+        run: |
+          python -m pytest e2e/ -v
